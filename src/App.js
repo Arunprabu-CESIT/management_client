@@ -1,11 +1,22 @@
 import React from 'react';
-
-import './App.css';
+import './App.scss';
+import { Routes, Route } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+import Home from './components/Home/Home';
 
 const App = () => {
   return (
     <>
-      <h2>Hello World</h2>
+      <div className="App">
+        <header>
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/register" exact element={<Register />} />
+          </Routes>
+        </header>
+      </div>
     </>
   );
 };
