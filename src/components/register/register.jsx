@@ -22,11 +22,11 @@ const Register = () => {
           <div className="register-form">
             <div className="title">New User Regiter Here!</div>
             <form onSubmit={handleSubmit}>
-              <label className="labl" htmlFor="firstName">
+              <label className="label-section" htmlFor="firstName">
                 First Name
               </label>
               <input
-                className="inpt"
+                className="input-section"
                 placeholder="Enter your First name"
                 type="text"
                 id="firstName"
@@ -37,11 +37,11 @@ const Register = () => {
                   setFirstName(e.target.value);
                 }}
               />
-              <label className="labl" htmlFor="lastName">
+              <label className="label-section" htmlFor="lastName">
                 Last Name
               </label>
               <input
-                className="inpt"
+                className="input-section"
                 placeholder="Enter your Last name"
                 type="text"
                 name="lastName"
@@ -53,10 +53,10 @@ const Register = () => {
                 }}
               />
 
-              <label className="labl" htmlFor="role">
+              <label className="label-section" htmlFor="role">
                 Role
               </label>
-              <div className="radi">
+              <div className="role-section">
                 <input
                   type="radio"
                   name="role"
@@ -68,7 +68,7 @@ const Register = () => {
                   }}
                 />
                 <label htmlFor="admin">Admin</label>
-
+                <div className="pad-8px"></div>
                 <input
                   type="radio"
                   name="role"
@@ -80,6 +80,7 @@ const Register = () => {
                   }}
                 />
                 <label htmlFor="hr">HR</label>
+                <div className="pad-8px"></div>
                 <input
                   type="radio"
                   name="role"
@@ -92,11 +93,11 @@ const Register = () => {
                 />
                 <label htmlFor="manager">Manager</label>
               </div>
-              <label className="labl" htmlFor="email">
+              <label className="label-section" htmlFor="email">
                 Email
               </label>
               <input
-                className="inpt"
+                className="input-section"
                 placeholder="Enter your Email"
                 type="email"
                 id="email"
@@ -107,11 +108,11 @@ const Register = () => {
                   setEmail(e.target.value);
                 }}
               />
-              <label className="labl" htmlFor="password">
+              <label className="label-section" htmlFor="password">
                 Password
               </label>
               <input
-                className="inpt"
+                className="input-section"
                 placeholder="Enter Password"
                 type="password"
                 id="password"
@@ -122,11 +123,11 @@ const Register = () => {
                   setPassword(e.target.value);
                 }}
               />
-              <label className="labl" htmlFor="confirmPassword">
+              <label className="label-section" htmlFor="confirmPassword">
                 Confirm Password
               </label>
               <input
-                className="inpt"
+                className="input-section"
                 placeholder="Confirm Password"
                 type="Password"
                 id="confirmPassword"
