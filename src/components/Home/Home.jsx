@@ -6,8 +6,8 @@ const Home = () => {
     <div className="App">
       <h4> Home Page</h4>
       <nav>
-        <Link to="login">Login</Link> <br />
-        <Link to="register">Register</Link>
+        <Link to="/login">Login</Link> <br />
+        <Link to="/register">Register</Link>
       </nav>
     </div>
   );

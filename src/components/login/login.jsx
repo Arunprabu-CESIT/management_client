@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './login.scss';
 
+import { signin } from '../../actions/auth';
+
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  // const [showPassword, setShowPassword] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  // const handleShowPassword = () => {
+  //   setShowPassword((prevShowPassword) => !prevShowPassword);
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // console.log(formData);
+    dispatch(signin(formData, history));
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -17,36 +35,40 @@ const Login = () => {
           <div className="login-form">
             <div className="title">Login to begin</div>
             <form onSubmit={handleSubmit}>
-              <label for="email">Email</label>
+              <label className="label-section" htmlFor="email">
+                Email
+              </label>
               <input
-                placeholder="Enter your email..."
+                className="input-section"
+                placeholder="Enter your Email"
                 type="email"
                 id="email"
+                name="email"
                 required
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                onChange={handleChange}
               />
-              <label for="password">Password</label>
+              <label className="label-section" htmlFor="password">
+                Password
+              </label>
               <input
+                className="input-section"
                 placeholder="Enter password"
-                type="password"
                 id="password"
+                name="password"
                 required
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                type="password"
+                // type={showPassword ? 'text' : 'password'}
+                // handleShowPassword={handleShowPassword}
+                onChange={handleChange}
               />
-              <button type="submit" id="sub_but">
+              <button type="submit" id="sub-button">
                 Login
               </button>
             </form>
 
             <div className="footer">
-              Don't have an Account ?{' '}
-              <Link className="link" to="/register">
+              <span> Don't have an Account ? </span> &nbsp;
+              <Link className="link-section" to="/register">
                 Register Now!
               </Link>
             </div>

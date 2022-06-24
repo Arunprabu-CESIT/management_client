@@ -1,18 +1,37 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import './register.scss';
 
+import { signup } from '../../actions/auth';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  role: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [role, setRole] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData, setFormData] = useState(initialState);
+  // const [showPassword, setShowPassword] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  // const handleShowPassword = () => {
+  //   setShowPassword((prevShowPassword) => !prevShowPassword);
+  // };
 
   const handleSubmit = (event) => {
-    console.log(event);
     event.preventDefault();
+    // console.log(formData);
+    dispatch(signup(formData, history));
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -32,10 +51,7 @@ const Register = () => {
                 id="firstName"
                 name="firstName"
                 required
-                value={firstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
+                onChange={handleChange}
               />
               <label className="label-section" htmlFor="lastName">
                 Last Name
@@ -47,52 +63,27 @@ const Register = () => {
                 name="lastName"
                 id="lastName"
                 required
-                value={lastName}
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
+                onChange={handleChange}
               />
 
               <label className="label-section" htmlFor="role">
                 Role
               </label>
-              <div className="role-section">
-                <input
-                  type="radio"
-                  name="role"
-                  id="admin"
-                  required
-                  value={role}
-                  onChange={(e) => {
-                    setRole(e.target.value);
-                  }}
-                />
-                <label htmlFor="admin">Admin</label>
-                <div className="pad-8px"></div>
-                <input
-                  type="radio"
-                  name="role"
-                  id="hr"
-                  required
-                  value={role}
-                  onChange={(e) => {
-                    setRole(e.target.value);
-                  }}
-                />
-                <label htmlFor="hr">HR</label>
-                <div className="pad-8px"></div>
-                <input
-                  type="radio"
-                  name="role"
-                  id="manager"
-                  required
-                  value={role}
-                  onChange={(e) => {
-                    setRole(e.target.value);
-                  }}
-                />
-                <label htmlFor="manager">Manager</label>
-              </div>
+              <select
+                className="role-section"
+                id="role"
+                name="role"
+                defaultValue="select-role"
+                required
+                onChange={handleChange}
+              >
+                <option value="select-role" disabled>
+                  Select role
+                </option>
+                <option value="admin">Admin</option>
+                <option value="hr">HR</option>
+                <option value="manager">Manager</option>
+              </select>
               <label className="label-section" htmlFor="email">
                 Email
               </label>
@@ -103,10 +94,7 @@ const Register = () => {
                 id="email"
                 name="email"
                 required
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                onChange={handleChange}
               />
               <label className="label-section" htmlFor="password">
                 Password
@@ -114,14 +102,13 @@ const Register = () => {
               <input
                 className="input-section"
                 placeholder="Enter Password"
-                type="password"
                 id="password"
                 name="password"
                 required
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                type="password"
+                // type={showPassword ? 'text' : 'password'}
+                // handleShowPassword={handleShowPassword}
+                onChange={handleChange}
               />
               <label className="label-section" htmlFor="confirmPassword">
                 Confirm Password
@@ -129,22 +116,21 @@ const Register = () => {
               <input
                 className="input-section"
                 placeholder="Confirm Password"
-                type="Password"
                 id="confirmPassword"
                 name="confirmPassword"
                 required
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                }}
+                type="password"
+                // type={showPassword ? 'text' : 'password'}
+                // handleShowPassword={handleShowPassword}
+                onChange={handleChange}
               />
-              <button type="submit" id="sub_but">
+              <button type="submit" id="sub-button">
                 Register
               </button>
             </form>
             <div className="footer">
-              Already have an Account ?{' '}
-              <Link className="link" to="/login">
+              <span> Already have an Account ? </span> &nbsp;
+              <Link className="link-section" to="/login">
                 Login Here!
               </Link>
             </div>

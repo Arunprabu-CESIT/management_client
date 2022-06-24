@@ -10,13 +10,13 @@ $main-color: #4dd6b6;
     height: 75vh;
     width: 40vw;
     background: antiquewhite;
-    border-radius: 1rem;
-    margin: 2rem auto;
-    box-shadow: 0.5rem 0.5rem 2rem -1rem rgb(58, 57, 57);
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 5px 5px 20px -10px rgb(58, 57, 57);
     display: flex;
     justify-content: center;
     align-items: center;
-    .link {
+    .link-section {
       text-decoration: none;
       color: darkcyan;
     }
@@ -25,25 +25,25 @@ $main-color: #4dd6b6;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      border-radius: 1rem;
-      margin: 2rem;
-      box-shadow: 0.5rem 0.5rem 2rem -1rem rgb(58, 57, 57);
+      border-radius: 10px;
+      margin: 20px;
+      box-shadow: 5px 5px 20px -10px rgb(58, 57, 57);
       height: 80%;
       width: 70%;
 
       .title {
-        font-size: 25px;
+        font-size: 22px;
         font-weight: 600;
       }
 
-      input {
+      .input-section {
         display: block;
         border: none;
-        height: 2rem;
+        height: 35px;
         width: 70%;
         margin: auto;
-        margin-bottom: 1.5rem;
-        padding: 0.2rem 1rem;
+        margin-bottom: 20px;
+        padding: 5px 10px;
         font-size: small;
         color: gray;
         transition: all 0.1s ease-in-out;
@@ -57,23 +57,23 @@ $main-color: #4dd6b6;
         }
       }
 
-      label {
+      .label-section {
         display: block;
         text-align: left;
         width: 78%;
         margin: auto;
         font-size: small;
         color: darkcyan;
-        margin-bottom: 0.5rem;
+        margin-bottom: 10px;
       }
 
-      #sub_but {
-        width: 77%;
+      #sub-button {
         background: $main-color;
         color: white;
         border: none;
+        margin-top: 10px;
         cursor: pointer;
-        padding: 0.5rem 1rem;
+        padding: 10px 15px;
         transition: all 0.2s ease;
         &:hover {
           box-shadow: 4px 3px 9px -1px gray;
