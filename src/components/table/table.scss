@@ -1,0 +1,19 @@
+.table-container {
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  table {
+    width: 50%;
+    border-collapse: collapse;
+  }
+  th {
+    padding: 12px 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+}

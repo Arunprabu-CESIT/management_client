@@ -1,8 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 .client-management {
-  text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .pad-8px {
   padding: 8px;
+}
+.pad-15px {
+  padding: 15px;
 }

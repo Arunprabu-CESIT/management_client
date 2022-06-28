@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Form from '../form/form';
+import Navbar from '../navbar/navbar';
+import Table from '../table/table';
 
 const Home = () => {
   return (
-    <div className="App">
-      <h4> Home Page</h4>
-      <nav>
-        <Link to="/login">Login</Link> <br />
-        <Link to="/register">Register</Link>
-      </nav>
+    <div>
+      <Navbar />
+      <Form />
+      <Table />
     </div>
   );
 };
