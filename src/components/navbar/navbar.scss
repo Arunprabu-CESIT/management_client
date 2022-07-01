@@ -29,6 +29,17 @@ $main-color: #4dd6b6;
       font-weight: 600;
       text-decoration: none;
       color: $main-color;
+
+      &:hover {
+        color: gray;
+      }
+    }
+    button {
+      border: none;
+      font-weight: 600;
+      text-decoration: none;
+      color: $main-color;
+      cursor: pointer;
       &:hover {
         color: gray;
       }

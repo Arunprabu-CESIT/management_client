@@ -10,15 +10,11 @@ const App = () => {
     <BrowserRouter>
       <div className="client-management">
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/register" exact>
-            <Register />
-          </Route>
+          <Route path="/" exact component={Home} />
+
+          <Route path="/login" exact component={Login} />
+
+          <Route path="/register" exact component={Register} />
         </Switch>
       </div>
     </BrowserRouter>

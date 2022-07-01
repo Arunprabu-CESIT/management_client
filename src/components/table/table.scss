@@ -1,19 +1,28 @@
 .table-container {
-  height: 700px;
-  display: flex;
-  justify-content: center;
-  align-items: start;
+  height: inherit;
+  width: 100%;
+
   table {
-    width: 50%;
+    width: inherit;
     border-collapse: collapse;
-  }
-  th {
-    padding: 12px 8px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    thead {
+      position: sticky;
+      top: 0;
+    }
+
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04aa6d;
+      color: white;
+      text-align: center;
+    }
   }
 }
