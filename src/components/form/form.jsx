@@ -3,144 +3,175 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './form.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faX } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import { createEmployee, updateEmployee } from '../../actions/employees';
 
-const Form = ({ currentId, setCurrentId }) => {
-  const [modal, setModal] = useState(false);
-  const [employeeData, setEmployeeData] = useState({
-    name: '',
-    employeeId: '',
-    email: '',
-    mobile: '',
-  });
+const Form = ({ trigger, setTrigger, action, formData }) => {
+  const [employeeData, setEmployeeData] = useState(formData);
 
-  const employee = useSelector((state) =>
-    currentId ? state.employees.find((e) => e._id === currentId) : null
-  );
+  const employee = useSelector((state) => {
+    return formData.employeeId !== ''
+      ? state.employees.find((e) => e.employeeId === formData.employeeId)
+      : null;
+  });
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const userData = JSON.parse(localStorage.getItem('profile'));
+
+  const roleDetails = userData.result.role;
 
   useEffect(() => {
     if (employee) setEmployeeData(employee);
   }, [employee]);
 
   const clear = () => {
-    setCurrentId(null);
-    setEmployeeData({
-      name: '',
-      employeeId: '',
-      email: '',
-      mobile: '',
-    });
+    setEmployeeData(formData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(employeeData);
 
-    if (currentId) {
+    if (action === 'view') {
       dispatch(
-        updateEmployee(currentId, {
+        updateEmployee(employeeData._id, {
           ...employeeData,
-          name: user?.result?.firstName,
         })
       );
     } else {
-      dispatch(
-        createEmployee({ ...employeeData, name: user?.result?.firstName })
-      );
+      dispatch(createEmployee({ ...employeeData }));
     }
-
-    clear();
+    setTrigger(false);
   };
 
-  const toggleModel = () => {
-    setModal(!modal);
-  };
-
-  if (modal) {
-    document.body.classList.add('active-modal');
-  } else {
-    document.body.classList.remove('active-modal');
-  }
-
-  return (
+  return trigger ? (
     <>
-      <button className="add-button" onClick={toggleModel}>
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
+      <div className="modal z-index-100">
+        <div onClick={() => setTrigger(false)} className="overlay"></div>
+        <div className="modal-content">
+          <button
+            className="close-modal"
+            onClick={() => {
+              setTrigger(false);
+              clear();
+            }}
+          >
+            <FontAwesomeIcon icon={faX} />
+          </button>
+          <div className="title">
+            {action === 'create' ? 'Add Employee' : 'Employee Details'}
+          </div>
+          <form onSubmit={handleSubmit}>
+            <input
+              className="input-section"
+              type="text"
+              placeholder="Employee Name"
+              id="name"
+              name="name"
+              value={employeeData.name}
+              onChange={(e) =>
+                setEmployeeData({ ...employeeData, name: e.target.value })
+              }
+              disabled={
+                action === 'view' &&
+                (roleDetails === 'manager' || roleDetails === 'hr')
+              }
+            />
+            <input
+              className="input-section"
+              type="text"
+              placeholder="Employee ID"
+              id="employeeId"
+              name="employeeId"
+              value={employeeData.employeeId}
+              onChange={(e) =>
+                setEmployeeData({
+                  ...employeeData,
+                  employeeId: e.target.value,
+                })
+              }
+              disabled={action === 'view'}
+            />
+            <input
+              className="input-section"
+              type="text"
+              placeholder="Email"
+              id="email"
+              name="email"
+              value={employeeData.email}
+              onChange={(e) =>
+                setEmployeeData({ ...employeeData, email: e.target.value })
+              }
+              disabled={action === 'view'}
+            />
+            <input
+              className="input-section"
+              type="text"
+              placeholder="Mobile"
+              id="mobile"
+              name="mobile"
+              value={employeeData.mobile}
+              onChange={(e) =>
+                setEmployeeData({ ...employeeData, mobile: e.target.value })
+              }
+              disabled={
+                action === 'view' &&
+                (roleDetails === 'manager' || roleDetails === 'hr')
+              }
+            />
+            <input
+              className="input-section"
+              type="text"
+              placeholder="Designation"
+              id="designation"
+              name="designation"
+              value={employeeData.designation}
+              onChange={(e) =>
+                setEmployeeData({
+                  ...employeeData,
+                  designation: e.target.value,
+                })
+              }
+              disabled={action === 'view' && roleDetails === 'manager'}
+            />
+            <input
+              className="input-section"
+              type="text"
+              placeholder="Address"
+              id="address"
+              name="address"
+              value={employeeData.address}
+              onChange={(e) =>
+                setEmployeeData({ ...employeeData, address: e.target.value })
+              }
+              disabled={action === 'view' && roleDetails === 'manager'}
+            />
 
-      {modal && (
-        <div className="modal">
-          <div onClick={toggleModel} className="overlay"></div>
-          <div className="modal-content">
-            <button className="close-modal" onClick={toggleModel}>
-              <FontAwesomeIcon icon={faX} />
-            </button>
-            <div className="title">Add Employee</div>
-            <form onSubmit={handleSubmit}>
-              <input
-                className="input-section"
-                type="text"
-                placeholder="Employee Name"
-                id="name"
-                name="name"
-                value={employeeData.name}
-                onChange={(e) =>
-                  setEmployeeData({ ...employeeData, name: e.target.value })
-                }
-              />
-              <input
-                className="input-section"
-                type="text"
-                placeholder="Employee ID"
-                id="employeeId"
-                name="employeeId"
-                value={employeeData.employeeId}
-                onChange={(e) =>
-                  setEmployeeData({
-                    ...employeeData,
-                    employeeId: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="input-section"
-                type="text"
-                placeholder="Email"
-                id="email"
-                name="email"
-                value={employeeData.email}
-                onChange={(e) =>
-                  setEmployeeData({ ...employeeData, email: e.target.value })
-                }
-              />
-              <input
-                className="input-section"
-                type="tel"
-                placeholder="Mobile"
-                id="mobile"
-                name="mobile"
-                value={employeeData.mobile}
-                onChange={(e) =>
-                  setEmployeeData({ ...employeeData, mobile: e.target.value })
-                }
-              />
-
-              <div className="text-center">
+            <div className="text-center">
+              {action === 'create' ? (
                 <button type="submit" className="submit-button">
                   ADD
                 </button>
-                <button className="submit-button" onClick={clear}>
-                  Clear
-                </button>
-              </div>
-            </form>
-          </div>
+              ) : (
+                ''
+              )}
+
+              {action === 'view' ? (
+                roleDetails !== 'manager' ? (
+                  <button type="submit" className="submit-button">
+                    Update
+                  </button>
+                ) : (
+                  ''
+                )
+              ) : (
+                ''
+              )}
+            </div>
+          </form>
         </div>
-      )}
+      </div>
     </>
+  ) : (
+    ''
   );
 };
 

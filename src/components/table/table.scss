@@ -16,6 +16,14 @@
       padding: 8px;
       text-align: center;
     }
+    .edit-employee {
+      cursor: pointer;
+      color: #0000d1;
+      text-decoration: underline;
+      &:hover {
+        font-weight: 600;
+      }
+    }
     th {
       padding-top: 12px;
       padding-bottom: 12px;
