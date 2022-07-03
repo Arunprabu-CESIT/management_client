@@ -1,0 +1,13 @@
+.profile-wrapper {
+  padding: 40px 80px;
+  .profile-container {
+    border-radius: 7px;
+    height: 400px;
+    width: 35%;
+    .first-item {
+      height: inherit;
+      text-align: center;
+      padding: 60px;
+    }
+  }
+}

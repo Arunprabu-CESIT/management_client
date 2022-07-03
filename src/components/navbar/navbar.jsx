@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 
@@ -26,7 +26,7 @@ const Navbar = () => {
     if (token) {
       const decodedToken = decode(token);
 
-      if (decodedToken.exp * 10000 < new Date().getTime()) {
+      if (decodedToken.exp * 3600 < new Date().getTime()) {
         logout();
       }
     }
@@ -38,7 +38,9 @@ const Navbar = () => {
     <>
       <nav className="navbar background">
         <div className="logo">
-          <img src={logo} alt="icon" />
+          <Link to={'/'}>
+            <img src={logo} alt="icon" />
+          </Link>
         </div>
 
         <div>
@@ -48,8 +50,10 @@ const Navbar = () => {
                 <li>
                   <div className="link-section">
                     <h3>
-                      {user.result.firstName.toUpperCase()}
-                      <small>({user.result.role.toUpperCase()})</small>
+                      <Link to="/userprofile">
+                        {user.result.firstName.toUpperCase()}
+                        <small>({user.result.role.toUpperCase()})</small>
+                      </Link>
                     </h3>
                   </div>
                 </li>

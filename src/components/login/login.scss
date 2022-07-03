@@ -43,7 +43,7 @@ $main-color: #4dd6b6;
         height: 35px;
         width: 70%;
         margin: auto;
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
         padding: 5px 10px;
         font-size: small;
         color: gray;
@@ -66,6 +66,12 @@ $main-color: #4dd6b6;
         font-size: small;
         color: darkcyan;
         margin-bottom: 10px;
+      }
+
+      .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 3px;
       }
 
       #sub-button {
