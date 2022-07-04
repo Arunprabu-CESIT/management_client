@@ -35,7 +35,6 @@ const Register = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       dispatch(signup(formData, history));
-      // console.log(formData);
     }
   }, [formErrors, dispatch]);
 

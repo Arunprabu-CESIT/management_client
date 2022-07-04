@@ -12,6 +12,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 const Home = () => {
   const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
+  const role = JSON.parse(localStorage.getItem('profile')).result.role;
 
   const initialState = {
     name: '',
@@ -35,11 +36,22 @@ const Home = () => {
           <div className="container box-shadow-3a3939">
             <div className="first-section">
               <div className="display-flex justify-space-around align-items-center height-inherit">
-                <div className="width-50"></div>
+                <div className="width-50">
+                  <div className="pad-left-20px font-size-20px font-weight-700">
+                    Employee List
+                  </div>
+                </div>
                 <div className="width-50 justify-end display-flex pad-right-20px">
-                  <button className="add-button" onClick={() => setPopup(true)}>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
+                  {role !== 'manager' ? (
+                    <button
+                      className="add-button"
+                      onClick={() => setPopup(true)}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                  ) : (
+                    ''
+                  )}
                 </div>
               </div>
             </div>

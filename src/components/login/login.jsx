@@ -30,7 +30,7 @@ const Login = () => {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formData);
+      // console.log(formData);
       dispatch(signin(formData, history));
     }
   }, [formErrors]);

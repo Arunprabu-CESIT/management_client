@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import './form.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +9,8 @@ import { createEmployee, updateEmployee } from '../../actions/employees';
 
 const Form = ({ trigger, setTrigger, action, formData }) => {
   const [employeeData, setEmployeeData] = useState(formData);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const employee = useSelector((state) => {
     return formData.employeeId !== ''
@@ -15,37 +18,83 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
       : null;
   });
   const dispatch = useDispatch();
+  const history = useHistory();
   const userData = JSON.parse(localStorage.getItem('profile'));
 
   const roleDetails = userData.result.role;
 
+  const handleChange = (e) => {
+    setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
+  };
+
   useEffect(() => {
     if (employee) setEmployeeData(employee);
-  }, [employee]);
+
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      if (action === 'view') {
+        dispatch(
+          updateEmployee(employeeData._id, {
+            ...employeeData,
+          })
+        );
+      } else {
+        dispatch(createEmployee({ ...employeeData }));
+      }
+      setTrigger(false);
+    }
+
+    setIsSubmit(false);
+  }, [employee, formErrors, dispatch]);
 
   const clear = () => {
     setEmployeeData(formData);
+    setFormErrors({});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFormErrors(validate(employeeData));
+    setIsSubmit(true);
+  };
 
-    if (action === 'view') {
-      dispatch(
-        updateEmployee(employeeData._id, {
-          ...employeeData,
-        })
-      );
-    } else {
-      dispatch(createEmployee({ ...employeeData }));
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+
+    if (!values.name) {
+      errors.name = 'Required!';
     }
-    setTrigger(false);
+    if (!values.employeeId) {
+      errors.employeeId = 'Required!';
+    }
+    if (!values.email) {
+      errors.email = 'Email is required!';
+    } else if (!regex.test(values.email)) {
+      errors.email = 'Enter a valid Email!';
+    }
+    if (!values.mobile) {
+      errors.mobile = 'Required!';
+    }
+    if (!values.designation) {
+      errors.designation = 'Required!';
+    }
+    if (!values.address) {
+      errors.address = 'Required!';
+    }
+
+    return errors;
   };
 
   return trigger ? (
     <>
       <div className="modal z-index-100">
-        <div onClick={() => setTrigger(false)} className="overlay"></div>
+        <div
+          onClick={() => {
+            setTrigger(false);
+            clear();
+          }}
+          className="overlay"
+        ></div>
         <div className="modal-content">
           <button
             className="close-modal"
@@ -67,14 +116,13 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               id="name"
               name="name"
               value={employeeData.name}
-              onChange={(e) =>
-                setEmployeeData({ ...employeeData, name: e.target.value })
-              }
+              onChange={handleChange}
               disabled={
                 action === 'view' &&
                 (roleDetails === 'manager' || roleDetails === 'hr')
               }
             />
+            <div className="error">{formErrors.name}</div>
             <input
               className="input-section"
               type="text"
@@ -82,14 +130,10 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               id="employeeId"
               name="employeeId"
               value={employeeData.employeeId}
-              onChange={(e) =>
-                setEmployeeData({
-                  ...employeeData,
-                  employeeId: e.target.value,
-                })
-              }
+              onChange={handleChange}
               disabled={action === 'view'}
             />
+            <div className="error">{formErrors.employeeId}</div>
             <input
               className="input-section"
               type="text"
@@ -97,11 +141,10 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               id="email"
               name="email"
               value={employeeData.email}
-              onChange={(e) =>
-                setEmployeeData({ ...employeeData, email: e.target.value })
-              }
+              onChange={handleChange}
               disabled={action === 'view'}
             />
+            <div className="error">{formErrors.email}</div>
             <input
               className="input-section"
               type="text"
@@ -109,14 +152,13 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               id="mobile"
               name="mobile"
               value={employeeData.mobile}
-              onChange={(e) =>
-                setEmployeeData({ ...employeeData, mobile: e.target.value })
-              }
+              onChange={handleChange}
               disabled={
                 action === 'view' &&
                 (roleDetails === 'manager' || roleDetails === 'hr')
               }
             />
+            <div className="error">{formErrors.mobile}</div>
             <input
               className="input-section"
               type="text"
@@ -124,14 +166,10 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               id="designation"
               name="designation"
               value={employeeData.designation}
-              onChange={(e) =>
-                setEmployeeData({
-                  ...employeeData,
-                  designation: e.target.value,
-                })
-              }
+              onChange={handleChange}
               disabled={action === 'view' && roleDetails === 'manager'}
             />
+            <div className="error">{formErrors.designation}</div>
             <input
               className="input-section"
               type="text"
@@ -139,11 +177,10 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               id="address"
               name="address"
               value={employeeData.address}
-              onChange={(e) =>
-                setEmployeeData({ ...employeeData, address: e.target.value })
-              }
+              onChange={handleChange}
               disabled={action === 'view' && roleDetails === 'manager'}
             />
+            <div className="error">{formErrors.address}</div>
 
             <div className="text-center">
               {action === 'create' ? (
