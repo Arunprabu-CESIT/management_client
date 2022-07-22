@@ -31,12 +31,12 @@ export const updateEmployee = (id, employee) => async (dispatch) => {
   }
 };
 
-// export const deleteEmployee = (id) => async (dispatch) => {
-//   try {
-//     await api.deleteEmployee(id);
+export const deleteEmployee = (id) => async (dispatch) => {
+  try {
+    await api.deleteEmployee(id);
 
-//     dispatch({ type: DELETE, payload: data });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    dispatch({ type: DELETE, payload: id });
+  } catch (error) {
+    console.log(error);
+  }
+};

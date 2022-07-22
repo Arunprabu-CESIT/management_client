@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getEmployees } from '../../actions/employees';
 
-import Form from '../form/form';
 import Navbar from '../navbar/navbar';
 import Table from '../table/table';
 import './home.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const [popup, setPopup] = useState(false);
-  const role = JSON.parse(localStorage.getItem('profile')).result.role;
+  const { t } = useTranslation();
 
-  const initialState = {
-    name: '',
-    employeeId: '',
-    email: '',
-    mobile: '',
-    address: '',
-    designation: '',
-  };
+  const dispatch = useDispatch();
+
+  const role = JSON.parse(localStorage.getItem('user')).result.role;
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -38,17 +33,16 @@ const Home = () => {
               <div className="display-flex justify-space-around align-items-center height-inherit">
                 <div className="width-50">
                   <div className="pad-left-20px font-size-20px font-weight-700">
-                    Employee List
+                    {t('employee_list')}
                   </div>
                 </div>
                 <div className="width-50 justify-end display-flex pad-right-20px">
                   {role !== 'manager' ? (
-                    <button
-                      className="add-button"
-                      onClick={() => setPopup(true)}
-                    >
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
+                    <Link to="/enroll">
+                      <button className="add-button">
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </Link>
                   ) : (
                     ''
                   )}
@@ -61,13 +55,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <Form
-        trigger={popup}
-        setTrigger={setPopup}
-        action="create"
-        formData={initialState}
-      />
     </>
   );
 };

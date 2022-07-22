@@ -5,9 +5,11 @@ import decode from 'jwt-decode';
 
 import logo from '../../images/logo.png';
 import './navbar.scss';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const { t } = useTranslation();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -30,7 +32,7 @@ const Navbar = () => {
         logout();
       }
     }
-    setUser(JSON.parse(localStorage.getItem('profile')));
+    setUser(JSON.parse(localStorage.getItem('user')));
   }, [location]);
 
   return (
@@ -57,7 +59,7 @@ const Navbar = () => {
                   </div>
                 </li>
                 <li>
-                  <button onClick={logout}>Logout</button>
+                  <button onClick={logout}>{t('logout')}</button>
                 </li>
               </ul>
             </>

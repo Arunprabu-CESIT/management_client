@@ -5,12 +5,14 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import Home from './components/home/home';
 import Profile from './components/profile/profile';
+import EmployeeEnroll from './components/employeeEnroll/employeeEnroll';
+import EmployeeDetails from './components/employeeDetails/employeeDetails';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      localStorage.getItem('profile') ? (
+      localStorage.getItem('user') ? (
         <Component {...props} />
       ) : (
         <Redirect to={{ pathname: '/login' }} />
@@ -19,12 +21,20 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+const languages = {
+  en: {
+    nativeName: 'English',
+  },
+  ta: {
+    nativeName: 'Tamil',
+  },
+};
+
 const App = () => {
   return (
     <BrowserRouter>
       <div className="client-management">
         <Switch>
-          {/* <Route path="/" exact component={Home} /> */}
           <PrivateRoute path="/" exact component={Home} />
 
           <Route path="/login" exact component={Login} />
@@ -32,6 +42,10 @@ const App = () => {
           <Route path="/register" exact component={Register} />
 
           <Route path="/userprofile" exact component={Profile} />
+
+          <Route path="/enroll" exact component={EmployeeEnroll} />
+
+          <Route path="/details" exact component={EmployeeDetails} />
         </Switch>
       </div>
     </BrowserRouter>

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './register.scss';
+import { Validate } from '../../helper/util';
 
 import { signup } from '../../actions/auth';
+import { useTranslation } from 'react-i18next';
 
 const initialState = {
   firstName: '',
@@ -15,6 +17,7 @@ const initialState = {
 };
 
 const Register = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState(initialState);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -28,7 +31,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formData));
+    setFormErrors(Validate(formData, 'register'));
     setIsSubmit(true);
   };
 
@@ -38,50 +41,16 @@ const Register = () => {
     }
   }, [formErrors, dispatch]);
 
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-
-    if (!values.firstName) {
-      errors.firstName = 'First Name is required!';
-    }
-    if (!values.lastName) {
-      errors.lastName = 'Last Name is required!';
-    }
-    if (!values.role) {
-      errors.role = 'Role is required!';
-    }
-    if (!values.email) {
-      errors.email = 'Email is required!';
-    } else if (!regex.test(values.email)) {
-      errors.email = 'Enter a valid Email!';
-    }
-    if (!values.password) {
-      errors.password = 'Password is required!';
-    } else if (values.password.length < 6) {
-      errors.password = 'Password must have 6 charecters';
-    } else if (values.password.length >= 12) {
-      errors.password = 'Password limit is 12 charecters';
-    }
-    if (!values.confirmPassword) {
-      errors.confirmPassword = 'Re-enter Password';
-    }
-    if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = `Password doesn't match!`;
-    }
-    return errors;
-  };
-
   return (
     <>
       <div className="main-register">
         <div className="register-container">
           <div className="register-form">
-            <div className="title">New User Regiter Here!</div>
+            <div className="title">{t('new_user_regiter_here')}!</div>
             <form onSubmit={handleSubmit}>
               <div>
                 <label className="label-section" htmlFor="firstName">
-                  First Name
+                  {t('first_name')}
                 </label>
                 <input
                   className="input-section"
@@ -96,7 +65,7 @@ const Register = () => {
               </div>
               <div>
                 <label className="label-section" htmlFor="lastName">
-                  Last Name
+                  {t('last_name')}
                 </label>
                 <input
                   className="input-section"
@@ -111,7 +80,7 @@ const Register = () => {
               </div>
               <div>
                 <label className="label-section" htmlFor="role">
-                  Role
+                  {t('role')}
                 </label>
                 <select
                   className="role-section"
@@ -131,7 +100,7 @@ const Register = () => {
               </div>
               <div>
                 <label className="label-section" htmlFor="email">
-                  Email
+                  {t('email')}
                 </label>
                 <input
                   className="input-section"
@@ -146,7 +115,7 @@ const Register = () => {
               </div>
               <div>
                 <label className="label-section" htmlFor="password">
-                  Password
+                  {t('password')}
                 </label>
                 <input
                   className="input-section"
@@ -161,7 +130,7 @@ const Register = () => {
               </div>
               <div>
                 <label className="label-section" htmlFor="confirmPassword">
-                  Confirm Password
+                  {t('confirm_password')}
                 </label>
                 <input
                   className="input-section"
@@ -176,14 +145,14 @@ const Register = () => {
               </div>
               <div>
                 <button type="submit" id="sub-button">
-                  Register
+                  {t('register')}
                 </button>
               </div>
             </form>
             <div className="footer">
-              <span> Already have an Account ? </span> &nbsp;
+              <small> {t('already_have_an_account')} ? </small> &nbsp;
               <Link className="link-section" to="/login">
-                Login Here!
+                {t('login_here')}!
               </Link>
             </div>
           </div>

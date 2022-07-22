@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './login.scss';
+import { Validate } from '../../helper/util';
 
 import { signin } from '../../actions/auth';
+import { useTranslation } from 'react-i18next';
 
 const initialValues = {
   email: '',
@@ -11,6 +13,7 @@ const initialValues = {
 };
 
 const Login = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -24,46 +27,26 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formData));
+    setFormErrors(Validate(formData, 'login'));
     setIsSubmit(true);
   };
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      // console.log(formData);
       dispatch(signin(formData, history));
     }
-  }, [formErrors]);
-
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-
-    if (!values.email) {
-      errors.email = 'Email is required!';
-    } else if (!regex.test(values.email)) {
-      errors.email = 'Enter a valid Email!';
-    }
-    if (!values.password) {
-      errors.password = 'Password is required!';
-    } else if (values.password.length < 6) {
-      errors.password = 'Password must have 6 charecters';
-    } else if (values.password.length >= 12) {
-      errors.password = 'Password limit is 12 charecters';
-    }
-    return errors;
-  };
+  }, [formErrors, dispatch]);
 
   return (
     <>
       <div className="main-login">
         <div className="login-container">
           <div className="login-form">
-            <div className="title">Login to begin</div>
+            <div className="title">{t('login_to_begin')}</div>
             <form onSubmit={handleSubmit}>
               <div className="pad-8px">
                 <label className="label-section" htmlFor="email">
-                  Email
+                  {t('email')}
                 </label>
                 <input
                   className="input-section"
@@ -78,7 +61,7 @@ const Login = () => {
               </div>
               <div className="pad-8px">
                 <label className="label-section" htmlFor="password">
-                  Password
+                  {t('password')}
                 </label>
                 <input
                   className="input-section"
@@ -93,15 +76,15 @@ const Login = () => {
               </div>
               <div>
                 <button type="submit" id="sub-button">
-                  Login
+                  {t('login')}
                 </button>
               </div>
             </form>
 
             <div className="footer">
-              <span> Don't have an Account ? </span> &nbsp;
+              <small> {t("don't_have_an_account")} ? </small> &nbsp;
               <Link className="link-section" to="/register">
-                Register Now!
+                {t('register_now')}!
               </Link>
             </div>
           </div>

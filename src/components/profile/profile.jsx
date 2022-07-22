@@ -1,23 +1,19 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Navbar from '../navbar/navbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
 import './profile.scss';
+import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
-  const user = JSON.parse(localStorage.getItem('profile'));
-  const history = useHistory();
+  const { t } = useTranslation();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <>
       <Navbar />
-      <div className="back" onClick={() => history.goBack()}>
-        <FontAwesomeIcon icon={faArrowLeft} />
+      <div>
+        <h2 style={{ textAlign: 'center' }}>{t('my_profile')}</h2>
       </div>
-      <h2 style={{ textAlign: 'center' }}>My Profile</h2>
       <div className="profile-wrapper display-flex justify-center">
         <div className="profile-container box-shadow-3a3939">
           <div className="first-item">
@@ -25,9 +21,13 @@ const Profile = () => {
               {user.result.firstName.toUpperCase()}{' '}
               {user.result.lastName.toUpperCase()}
             </h1>
-            <div className="pad-8px">Role: {user.result.role}</div>
-            <div className="pad-8px">Email: {user.result.email}</div>
-            <div style={{ marginTop: '50px' }}> Social Profile:</div>
+            <div className="pad-8px">
+              {t('role')}: {user.result.role}
+            </div>
+            <div className="pad-8px">
+              {t('email')}: {user.result.email}
+            </div>
+            <div style={{ marginTop: '50px' }}> {t('social_profile')}:</div>
           </div>
         </div>
       </div>

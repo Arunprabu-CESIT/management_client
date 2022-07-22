@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import './form.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
 import { createEmployee, updateEmployee } from '../../actions/employees';
+import { Validate } from '../../helper/util';
+import { useTranslation } from 'react-i18next';
 
-const Form = ({ trigger, setTrigger, action, formData }) => {
+const Form = ({ action, formData }) => {
+  const { t } = useTranslation();
   const [employeeData, setEmployeeData] = useState(formData);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -19,7 +20,7 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
   });
   const dispatch = useDispatch();
   const history = useHistory();
-  const userData = JSON.parse(localStorage.getItem('profile'));
+  const userData = JSON.parse(localStorage.getItem('user'));
 
   const roleDetails = userData.result.role;
 
@@ -40,7 +41,7 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
       } else {
         dispatch(createEmployee({ ...employeeData }));
       }
-      setTrigger(false);
+      history.push('/');
     }
 
     setIsSubmit(false);
@@ -53,60 +54,16 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(employeeData));
+    setFormErrors(Validate(employeeData, 'employeeData'));
     setIsSubmit(true);
   };
 
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-
-    if (!values.name) {
-      errors.name = 'Required!';
-    }
-    if (!values.employeeId) {
-      errors.employeeId = 'Required!';
-    }
-    if (!values.email) {
-      errors.email = 'Email is required!';
-    } else if (!regex.test(values.email)) {
-      errors.email = 'Enter a valid Email!';
-    }
-    if (!values.mobile) {
-      errors.mobile = 'Required!';
-    }
-    if (!values.designation) {
-      errors.designation = 'Required!';
-    }
-    if (!values.address) {
-      errors.address = 'Required!';
-    }
-
-    return errors;
-  };
-
-  return trigger ? (
+  return (
     <>
-      <div className="modal z-index-100">
-        <div
-          onClick={() => {
-            setTrigger(false);
-            clear();
-          }}
-          className="overlay"
-        ></div>
+      <div className="form-section modal z-index-100">
         <div className="modal-content">
-          <button
-            className="close-modal"
-            onClick={() => {
-              setTrigger(false);
-              clear();
-            }}
-          >
-            <FontAwesomeIcon icon={faX} />
-          </button>
           <div className="title">
-            {action === 'create' ? 'Add Employee' : 'Employee Details'}
+            {action === 'create' ? t('add_employee') : t('employee_details')}
           </div>
           <form onSubmit={handleSubmit}>
             <input
@@ -131,7 +88,10 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               name="employeeId"
               value={employeeData.employeeId}
               onChange={handleChange}
-              disabled={action === 'view'}
+              disabled={
+                action === 'view' &&
+                (roleDetails === 'manager' || roleDetails === 'hr')
+              }
             />
             <div className="error">{formErrors.employeeId}</div>
             <input
@@ -142,7 +102,10 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               name="email"
               value={employeeData.email}
               onChange={handleChange}
-              disabled={action === 'view'}
+              disabled={
+                action === 'view' &&
+                (roleDetails === 'manager' || roleDetails === 'hr')
+              }
             />
             <div className="error">{formErrors.email}</div>
             <input
@@ -185,7 +148,7 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
             <div className="text-center">
               {action === 'create' ? (
                 <button type="submit" className="submit-button">
-                  ADD
+                  {t('add')}
                 </button>
               ) : (
                 ''
@@ -194,7 +157,7 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
               {action === 'view' ? (
                 roleDetails !== 'manager' ? (
                   <button type="submit" className="submit-button">
-                    Update
+                    {t('update')}
                   </button>
                 ) : (
                   ''
@@ -207,8 +170,6 @@ const Form = ({ trigger, setTrigger, action, formData }) => {
         </div>
       </div>
     </>
-  ) : (
-    ''
   );
 };
 

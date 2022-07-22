@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import Form from '../form/form';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
+import { useTranslation } from 'react-i18next';
 import './table.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { deleteEmployee } from '../../actions/employees';
 
 const Table = () => {
+  const { t } = useTranslation();
+  const user = JSON.parse(localStorage.getItem('user'));
   const employees = useSelector((state) => state.employees);
-
-  const [popup, setPopup] = useState(false);
-
-  const [data, setData] = useState({
-    name: '',
-    employeeId: '',
-    email: '',
-    mobile: '',
-    address: '',
-    designation: '',
-  });
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -24,12 +20,13 @@ const Table = () => {
         <table>
           <thead>
             <tr>
-              <th>Employee ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Designation</th>
-              <th>Address</th>
+              <th>{t('employee_id')}</th>
+              <th>{t('name')}</th>
+              <th>{t('email')}</th>
+              <th>{t('mobile')}</th>
+              <th>{t('designation')}</th>
+              <th>{t('address')}</th>
+              {user.result.role === 'admin' ? <th>{t('action')}</th> : null}
             </tr>
           </thead>
 
@@ -37,34 +34,31 @@ const Table = () => {
             {employees.map((employee) => (
               <tr key={employee._id}>
                 <td>
-                  <div
-                    className="edit-employee"
-                    onClick={() => {
-                      setData(employee);
-
-                      setPopup(true);
-                    }}
+                  <Link
+                    to={{ pathname: '/details', employeeDetails: employee }}
                   >
                     {employee.employeeId}
-                  </div>
+                  </Link>
                 </td>
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
                 <td>{employee.mobile}</td>
                 <td>{employee.designation}</td>
                 <td>{employee.address}</td>
+                {user.result.role === 'admin' ? (
+                  <td>
+                    <FontAwesomeIcon
+                      onClick={() => dispatch(deleteEmployee(employee._id))}
+                      className="delete"
+                      icon={faTrash}
+                    />
+                  </td>
+                ) : null}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <Form
-        trigger={popup}
-        setTrigger={setPopup}
-        action="view"
-        formData={data}
-      />
     </>
   );
 };
