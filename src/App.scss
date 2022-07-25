@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.client-management {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pad-8px {
+  padding: 8px;
+}
+.pad-15px {
+  padding: 15px;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.justify-space-around {
+  justify-content: space-around;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-end {
+  justify-content: end;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.height-inherit {
+  height: inherit;
+}
+
+.box-shadow-3a3939 {
+  box-shadow: 0 0 10px 0 #3a3939;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.pad-right-20px {
+  padding-right: 20px;
+}
+.pad-left-20px {
+  padding-left: 20px;
+}
+
+.font-size-20px {
+  font-size: 20px;
+}
+
+.font-weight-700 {
+  font-weight: 700;
+}
+
+.z-index-100 {
+  z-index: 100;
+}
+
+// custom scrollbar style
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

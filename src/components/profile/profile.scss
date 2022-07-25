@@ -1,0 +1,25 @@
+.profile-wrapper {
+  padding: 40px 80px;
+  .profile-container {
+    background: #fff1e0;
+    border-radius: 7px;
+    height: 400px;
+    width: 35%;
+    .first-item {
+      height: inherit;
+      text-align: center;
+      padding: 60px;
+    }
+    .select-lang {
+      border: none;
+      padding: 8px;
+    }
+  }
+}
+
+.back {
+  padding: 5px;
+  margin-left: 270px;
+  font-size: xx-large;
+  cursor: pointer;
+}

@@ -1,0 +1,39 @@
+.table-container {
+  height: inherit;
+  width: 100%;
+
+  table {
+    width: inherit;
+    border-collapse: collapse;
+    thead {
+      position: sticky;
+      top: 0;
+    }
+
+    td,
+    th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    .edit-employee {
+      cursor: pointer;
+      color: #0000d1;
+      text-decoration: underline;
+      &:hover {
+        font-weight: 600;
+      }
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04aa6d;
+      color: #ffffff;
+      text-align: center;
+    }
+    .delete {
+      cursor: pointer;
+    }
+  }
+}
