@@ -69,7 +69,7 @@ const Form = ({ action, formData }) => {
             <input
               className="input-section"
               type="text"
-              placeholder="Employee Name"
+              placeholder={t('employee_name')}
               id="name"
               name="name"
               value={employeeData.name}
@@ -83,7 +83,7 @@ const Form = ({ action, formData }) => {
             <input
               className="input-section"
               type="text"
-              placeholder="Employee ID"
+              placeholder={t('employee_id')}
               id="employeeId"
               name="employeeId"
               value={employeeData.employeeId}
@@ -97,7 +97,7 @@ const Form = ({ action, formData }) => {
             <input
               className="input-section"
               type="text"
-              placeholder="Email"
+              placeholder={t('email')}
               id="email"
               name="email"
               value={employeeData.email}
@@ -111,7 +111,7 @@ const Form = ({ action, formData }) => {
             <input
               className="input-section"
               type="text"
-              placeholder="Mobile"
+              placeholder={t('mobile')}
               id="mobile"
               name="mobile"
               value={employeeData.mobile}
@@ -125,7 +125,7 @@ const Form = ({ action, formData }) => {
             <input
               className="input-section"
               type="text"
-              placeholder="Designation"
+              placeholder={t('designation')}
               id="designation"
               name="designation"
               value={employeeData.designation}
@@ -136,7 +136,7 @@ const Form = ({ action, formData }) => {
             <input
               className="input-section"
               type="text"
-              placeholder="Address"
+              placeholder={t('address')}
               id="address"
               name="address"
               value={employeeData.address}

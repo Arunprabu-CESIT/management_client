@@ -21,7 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-const languages = {
+export const languages = {
   en: {
     nativeName: 'English',
   },
